@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Placement Archive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;450;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#F7F8F6;
+  --card:#FFFFFF;
+  --ink:#14181B;
+  --muted:#5E6B70;
+  --rule:#DDE3E1;
+  --accent:#0F5C55;
+  --accent-soft:#E4EFED;
+  --warn:#8A5A12;
+  --radius:3px;
+  --sans:"IBM Plex Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --serif:"Newsreader",Georgia,"Times New Roman",serif;
+}
+:root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --paper:#111517; --card:#171C1F; --ink:#E8EDEC; --muted:#93A1A5;
+    --rule:#2A3235; --accent:#6FC3B6; --accent-soft:#1B2A29; --warn:#D2A253;
+  }
+}
+:root[data-theme="dark"]{
+  --paper:#111517; --card:#171C1F; --ink:#E8EDEC; --muted:#93A1A5;
+  --rule:#2A3235; --accent:#6FC3B6; --accent-soft:#1B2A29; --warn:#D2A253;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:15px; line-height:1.5;
+  -webkit-font-smoothing:antialiased;
+}
+button,input,select{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* ---------- masthead ---------- */
+.masthead{
+  border-bottom:1px solid var(--rule); background:var(--card);
+  position:sticky; top:0; z-index:40;
+}
+.masthead-inner{
+  max-width:1280px; margin:0 auto; padding:14px 20px;
+  display:flex; gap:18px; align-items:center; flex-wrap:wrap;
+}
+.wordmark{font-family:var(--serif); font-size:21px; font-weight:600; letter-spacing:-.01em; white-space:nowrap}
+.wordmark span{color:var(--muted); font-weight:400; font-style:italic}
+.search{flex:1; min-width:220px; position:relative}
+.search input{
+  width:100%; padding:9px 12px 9px 34px; background:var(--paper);
+  border:1px solid var(--rule); border-radius:var(--radius);
+}
+.search svg{position:absolute; left:11px; top:50%; transform:translateY(-50%); color:var(--muted)}
+.tally{color:var(--muted); font-size:13.5px; white-space:nowrap; font-variant-numeric:tabular-nums}
+.theme-btn{
+  background:none; border:1px solid var(--rule); border-radius:var(--radius);
+  padding:7px 10px; cursor:pointer; color:var(--muted); line-height:1;
+}
+
+/* ---------- shell ---------- */
+.shell{max-width:1280px; margin:0 auto; padding:0 20px 80px; display:grid;
+  grid-template-columns:224px minmax(0,1fr); gap:32px; align-items:start}
+@media(max-width:860px){.shell{grid-template-columns:1fr; gap:0}}
+
+/* ---------- filters ---------- */
+.rail{position:sticky; top:74px; padding:24px 0}
+@media(max-width:860px){
+  .rail{position:static; padding:14px 0; border-bottom:1px solid var(--rule)}
+  .rail-body{display:none} .rail-body.open{display:block}
+  .rail-toggle{display:flex !important}
+}
+.rail-toggle{display:none; width:100%; justify-content:space-between; align-items:center;
+  background:none;border:1px solid var(--rule);border-radius:var(--radius);padding:9px 12px;cursor:pointer}
+.fgroup{margin-bottom:20px}
+.fgroup h3{
+  margin:0 0 8px; font-size:12.5px; font-weight:600; color:var(--muted);
+  letter-spacing:.01em;
+}
+.opt{display:flex; align-items:center; gap:8px; padding:3px 0; cursor:pointer; font-size:14px}
+.opt input{accent-color:var(--accent); margin:0}
+.opt .n{margin-left:auto; color:var(--muted); font-size:12.5px; font-variant-numeric:tabular-nums}
+.fgroup select,.fgroup input[type=number]{
+  width:100%; padding:7px 9px; background:var(--card);
+  border:1px solid var(--rule); border-radius:var(--radius);
+}
+.reset{background:none;border:none;color:var(--accent);cursor:pointer;padding:0;font-size:13.5px;text-decoration:underline}
+
+/* ---------- listing ---------- */
+.listbar{display:flex; align-items:baseline; justify-content:space-between;
+  gap:12px; padding:24px 0 10px; flex-wrap:wrap}
+.listbar label{color:var(--muted); font-size:13.5px}
+.listbar select{background:var(--card); border:1px solid var(--rule);
+  border-radius:var(--radius); padding:6px 8px}
+
+.rows{border-top:1px solid var(--rule)}
+.row{
+  display:grid; grid-template-columns:minmax(0,1fr) 128px 92px;
+  gap:20px; align-items:baseline;
+  width:100%; text-align:left; background:none; border:0;
+  border-bottom:1px solid var(--rule); padding:16px 4px;
+  cursor:pointer; font:inherit; color:inherit;
+}
+.row:hover,.row:focus-visible{background:var(--accent-soft)}
+.role{font-family:var(--serif); font-size:18px; font-weight:500; line-height:1.3;
+  letter-spacing:-.005em; margin:0 0 3px}
+.org{font-size:14px; color:var(--ink); margin:0}
+.meta{font-size:13px; color:var(--muted); margin:4px 0 0}
+.meta em{font-style:normal}
+.money{text-align:right; font-variant-numeric:tabular-nums}
+.money b{font-family:var(--serif); font-size:19px; font-weight:500; letter-spacing:-.01em; display:block}
+.money small{color:var(--muted); font-size:12px}
+.gate{text-align:right; font-variant-numeric:tabular-nums; font-size:14px; color:var(--muted)}
+@media(max-width:700px){
+  .row{grid-template-columns:minmax(0,1fr) auto; gap:10px}
+  .gate{grid-column:2; text-align:right}
+  .money{grid-column:2}
+}
+.tag{display:inline-block; font-size:11.5px; padding:1px 6px; border:1px solid var(--rule);
+  border-radius:20px; color:var(--muted); vertical-align:middle; margin-left:6px}
+.tag.intern{color:var(--accent); border-color:var(--accent)}
+
+/* ---------- empty / loader ---------- */
+.notice{padding:56px 4px; max-width:60ch}
+.notice h2{font-family:var(--serif); font-weight:500; font-size:24px; margin:0 0 10px}
+.notice p{color:var(--muted); margin:0 0 14px}
+.drop{border:1.5px dashed var(--rule); border-radius:var(--radius); padding:26px;
+  text-align:center; color:var(--muted); background:var(--card)}
+.drop.hot{border-color:var(--accent); background:var(--accent-soft); color:var(--ink)}
+.btn{background:var(--accent); color:#fff; border:0; border-radius:var(--radius);
+  padding:9px 15px; cursor:pointer; font-weight:500}
+:root[data-theme="dark"] .btn,:root:not([data-theme="light"]) .btn{color:#0C1211}
+
+/* ---------- drawer ---------- */
+.scrim{position:fixed; inset:0; background:rgba(12,18,20,.42); z-index:50;
+  opacity:0; pointer-events:none; transition:opacity .18s}
+.scrim.show{opacity:1; pointer-events:auto}
+.drawer{
+  position:fixed; top:0; right:0; height:100dvh; width:min(660px,100%);
+  background:var(--card); border-left:1px solid var(--rule); z-index:60;
+  transform:translateX(100%); transition:transform .22s cubic-bezier(.32,.72,0,1);
+  display:flex; flex-direction:column;
+}
+.drawer.show{transform:none}
+@media(prefers-reduced-motion:reduce){.drawer,.scrim{transition:none}}
+.drawer-head{padding:20px 24px 14px; border-bottom:1px solid var(--rule); flex:0 0 auto}
+.drawer-head h2{font-family:var(--serif); font-weight:500; font-size:25px;
+  line-height:1.2; letter-spacing:-.01em; margin:0 0 4px}
+.drawer-head .org{font-size:15px}
+.close{position:absolute; top:16px; right:18px; background:var(--paper);
+  border:1px solid var(--rule); border-radius:var(--radius); cursor:pointer;
+  width:30px; height:30px; line-height:1; color:var(--muted)}
+.drawer-body{overflow:auto; padding:4px 24px 40px; flex:1 1 auto}
+.facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:14px 18px; margin:18px 0 6px; padding-bottom:18px; border-bottom:1px solid var(--rule)}
+.fact dt{font-size:12.5px; color:var(--muted); margin:0 0 2px}
+.fact dd{margin:0; font-size:15px; font-variant-numeric:tabular-nums}
+.sect{padding:20px 0; border-bottom:1px solid var(--rule)}
+.sect:last-child{border-bottom:0}
+.sect h3{font-size:13px; font-weight:600; color:var(--muted); margin:0 0 9px}
+.sect p,.sect pre{margin:0; white-space:pre-wrap; word-wrap:break-word;
+  font-family:inherit; font-size:14.5px; line-height:1.62; max-width:72ch}
+.flow{list-style:none; margin:0; padding:0}
+.flow li{position:relative; padding:0 0 14px 20px; border-left:1.5px solid var(--rule)}
+.flow li:last-child{border-left-color:transparent; padding-bottom:0}
+.flow li::before{content:""; position:absolute; left:-5.5px; top:5px; width:9px; height:9px;
+  border-radius:50%; background:var(--accent)}
+.flow b{font-weight:500}
+.flow span{display:block; color:var(--muted); font-size:13px}
+.files{list-style:none;margin:0;padding:0}
+.files li{padding:3px 0; font-size:14px; color:var(--muted)}
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="wordmark">Placement <span>archive</span></div>
+    <div class="search">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search role, company, skill, description" autocomplete="off">
+    </div>
+    <div class="tally" id="tally"></div>
+      <div class="tally" id="built" style="opacity:.75"></div>
+    <button class="theme-btn" id="theme" title="Switch theme">◐</button>
+  </div>
+</header>
+
+<div class="shell">
+  <aside class="rail">
+    <button class="rail-toggle" id="railToggle" aria-expanded="false">Filters <span>▾</span></button>
+    <div class="rail-body" id="railBody">
+      <div class="fgroup">
+        <h3>Type</h3>
+        <div id="fType"></div>
+      </div>
+      <div class="fgroup">
+        <h3>Category</h3>
+        <div id="fCat"></div>
+      </div>
+      <div class="fgroup">
+        <h3>Minimum package</h3>
+        <select id="fCtc">
+          <option value="0">Any</option>
+          <option value="500000">₹5 LPA and above</option>
+          <option value="1000000">₹10 LPA and above</option>
+          <option value="1500000">₹15 LPA and above</option>
+          <option value="2000000">₹20 LPA and above</option>
+          <option value="3000000">₹30 LPA and above</option>
+        </select>
+      </div>
+      <div class="fgroup">
+        <h3>Your CGPA</h3>
+        <input id="fCgpa" type="number" min="0" max="10" step="0.01" placeholder="e.g. 8.46">
+        <label class="opt" style="margin-top:7px">
+          <input type="checkbox" id="fCgpaOnly"> Hide roles above it
+        </label>
+      </div>
+      <div class="fgroup">
+        <button class="reset" id="reset">Clear all filters</button>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <div class="listbar" id="listbar" hidden>
+      <label for="sort">Sort</label>
+      <select id="sort">
+        <option value="ctc-desc">Package, high to low</option>
+        <option value="ctc-asc">Package, low to high</option>
+        <option value="company">Company, A–Z</option>
+        <option value="role">Role, A–Z</option>
+        <option value="cgpa-asc">CGPA needed, lowest first</option>
+        <option value="index">Original listing order</option>
+      </select>
+    </div>
+    <div id="out"></div>
+  </main>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" role="dialog" aria-modal="true" aria-labelledby="dTitle" tabindex="-1">
+  <div class="drawer-head">
+    <button class="close" id="close" aria-label="Close">✕</button>
+    <h2 id="dTitle"></h2>
+    <p class="org" id="dOrg"></p>
+  </div>
+  <div class="drawer-body" id="dBody"></div>
+</aside>
+
+<script>
+// Job records are injected here by build.py at build time, so the page is a
+// single self-contained file: no fetch, no CORS, works opened from disk and
+// on any static host.
+const EMBEDDED = /*__JOBS__*/[]/*__END__*/;
+const BUILT_ON = "/*__BUILT__*/";
+let JOBS = [], VIEW = [];
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c =>
+  ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+
+// Most packages are per annum, a few are per month. Comparing them raw would
+// rank a 1.5L/month internship below a 6L/year job, so everything is put on an
+// annual footing for sorting and filtering.
+function annual(j){
+  const v = j.ctc_max ?? j.ctc_min;
+  if (v == null) return null;
+  return j.ctc_period === "month" ? v * 12 : v;
+}
+function lpa(n){
+  if (n == null) return null;
+  const l = n / 100000;
+  return (l >= 10 ? l.toFixed(1) : l.toFixed(2))
+           .replace(/(\.\d*?)0+$/, "$1").replace(/\.$/, "");
+}
+const isIntern = j => /intern/i.test(j.job_type || "");
+
+/* ---------- loading ---------- */
+function boot(){
+  if (Array.isArray(EMBEDDED) && EMBEDDED.length){
+    JOBS = EMBEDDED;
+    buildFacets();
+    $("#listbar").hidden = false;
+    if (BUILT_ON && !BUILT_ON.startsWith("/*")) $("#built").textContent = "Updated " + BUILT_ON;
+    apply();
+  } else {
+    $("#listbar").hidden = true;
+    $("#out").innerHTML = `
+      <div class="notice">
+        <h2>No data in this build</h2>
+        <p>Run <b>python build.py</b> with your scraped JSON in <b>data/</b>, then reload.</p>
+      </div>`;
+  }
+}
+
+/* ---------- facets ---------- */
+function facet(el, key, values){
+  el.innerHTML = values.map(([v,n]) => `
+    <label class="opt"><input type="checkbox" data-k="${key}" value="${esc(v)}">
+      <span>${esc(v)}</span><span class="n">${n}</span></label>`).join("");
+}
+function buildFacets(){
+  const tally = k => {
+    const m = new Map();
+    JOBS.forEach(j => { const v = j[k]; if(v) m.set(v,(m.get(v)||0)+1); });
+    return [...m.entries()].sort((a,b) => b[1]-a[1]);
+  };
+  facet($("#fType"), "job_type", tally("job_type"));
+  facet($("#fCat"), "category", tally("category"));
+  document.querySelectorAll('.rail input[type=checkbox][data-k]').forEach(c => c.onchange = apply);
+}
+
+/* ---------- filter + sort ---------- */
+function checked(k){
+  return [...document.querySelectorAll(`input[data-k="${k}"]:checked`)].map(c => c.value);
+}
+function apply(){
+  const q = $("#q").value.trim().toLowerCase();
+  const types = checked("job_type"), cats = checked("category");
+  const minCtc = +$("#fCtc").value || 0;
+  const cgpa = parseFloat($("#fCgpa").value);
+  const gateOn = $("#fCgpaOnly").checked && !isNaN(cgpa);
+
+  VIEW = JOBS.filter(j => {
+    if(types.length && !types.includes(j.job_type)) return false;
+    if(cats.length && !cats.includes(j.category)) return false;
+    if(minCtc){ const a = annual(j); if(a == null || a < minCtc) return false; }
+    if(gateOn && j.required_cgpa != null && j.required_cgpa > cgpa) return false;
+    if(q){
+      const hay = [j.title,j.company,j.location,j.job_functions,j.required_skills,
+                   j.job_description,j.about_company,j.category]
+                  .filter(Boolean).join(" ").toLowerCase();
+      if(!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  const s = $("#sort").value;
+  const byNum = (f,dir) => (a,b) => {
+    const x=f(a), y=f(b);
+    if(x==null && y==null) return 0;
+    if(x==null) return 1;            // unknowns always sink
+    if(y==null) return -1;
+    return dir*(x-y);
+  };
+  ({
+    "ctc-desc": () => VIEW.sort(byNum(annual,-1)),
+    "ctc-asc":  () => VIEW.sort(byNum(annual, 1)),
+    "cgpa-asc": () => VIEW.sort(byNum(j=>j.required_cgpa, 1)),
+    "company":  () => VIEW.sort((a,b)=>(a.company||"").localeCompare(b.company||"")),
+    "role":     () => VIEW.sort((a,b)=>(a.title||"").localeCompare(b.title||"")),
+    "index":    () => VIEW.sort((a,b)=>(a.index||0)-(b.index||0)),
+  })[s]();
+
+  render();
+}
+function render(){
+  $("#tally").textContent = `${VIEW.length} of ${JOBS.length}`;
+  if(!VIEW.length){
+    $("#out").innerHTML = `<div class="notice"><h2>Nothing matches</h2>
+      <p>Widen the package range or clear a filter to see more roles.</p></div>`;
+    return;
+  }
+  $("#out").innerHTML = `<div class="rows">` + VIEW.map((j,i) => {
+    const a = annual(j), l = lpa(a);
+    const cg = j.required_cgpa;
+    return `<button class="row" data-i="${i}">
+      <div>
+        <p class="role">${esc(j.title || "Untitled role")}${
+          isIntern(j) ? '<span class="tag intern">Internship</span>' : ""}</p>
+        <p class="org">${esc(j.company || "Company not stated")}</p>
+        <p class="meta">${esc(j.location || "Location not stated")}${
+          j.category ? " &middot; " + esc(j.category) : ""}</p>
+      </div>
+      <div class="money">${ l ? `<b>₹${l}L</b><small>${
+          j.ctc_period === "month" ? "per year, from monthly" : "per year"}</small>`
+        : `<small>Not stated</small>` }</div>
+      <div class="gate">${ cg != null ? esc(cg) + " CGPA" : "—" }</div>
+    </button>`;
+  }).join("") + `</div>`;
+  document.querySelectorAll(".row").forEach(r => r.onclick = () => open(VIEW[+r.dataset.i]));
+}
+
+/* ---------- drawer ---------- */
+function block(title, body){
+  return body ? `<section class="sect"><h3>${esc(title)}</h3><p>${esc(body)}</p></section>` : "";
+}
+function open(j){
+  $("#dTitle").textContent = j.title || "Untitled role";
+  $("#dOrg").textContent = [j.company, j.location].filter(Boolean).join(" · ");
+
+  const a = annual(j), l = lpa(a);
+  const facts = [
+    ["Package", j.ctc_raw || (l ? `₹${l}L per year` : "Not stated")],
+    ["Type", j.job_type],
+    ["Category", j.category],
+    ["Function", j.job_functions],
+    ["CGPA needed", j.required_cgpa != null
+        ? j.required_cgpa + (j.required_stated_as === "percent"
+            ? ` (stated as ${j.required_percent_original}%)` : "")
+        : null],
+    ["Backlogs", j.backlogs],
+    ["Posted", j.posted],
+  ].filter(([,v]) => v != null && v !== "");
+
+  const wf = (j.hiring_workflow || []).map(s =>
+    `<li><b>${esc(s.step)}</b>${s.venue ? `<span>${esc(s.venue)}</span>` : ""}</li>`).join("");
+
+  const files = (j.attachments || []).map(f => `<li>${esc(f)}</li>`).join("");
+
+  $("#dBody").innerHTML = `
+    <dl class="facts">${facts.map(([k,v]) =>
+      `<div class="fact"><dt>${esc(k)}</dt><dd>${esc(v)}</dd></div>`).join("")}</dl>
+    ${block("What the role involves", j.job_description)}
+    ${block("Skills asked for", j.required_skills)}
+    ${block("Pay details", j.other_info)}
+    ${wf ? `<section class="sect"><h3>Selection process</h3><ul class="flow">${wf}</ul></section>` : ""}
+    ${block("Who can apply", j.academic_eligibility)}
+    ${block("Courses", j.course_eligibility)}
+    ${block("Student categories", j.allowed_student_categories)}
+    ${block("Other restrictions", j.other_restrictions)}
+    ${block("Also worth knowing", j.additional_information)}
+    ${files ? `<section class="sect"><h3>Attached on the portal</h3><ul class="files">${files}</ul></section>` : ""}
+    ${block("About the company", j.about_company)}
+  `;
+  $("#drawer").classList.add("show");
+  $("#scrim").classList.add("show");
+  $("#drawer").focus();
+}
+function shut(){
+  $("#drawer").classList.remove("show");
+  $("#scrim").classList.remove("show");
+}
+
+/* ---------- wiring ---------- */
+$("#q").addEventListener("input", apply);
+$("#fCtc").addEventListener("change", apply);
+$("#fCgpa").addEventListener("input", apply);
+$("#fCgpaOnly").addEventListener("change", apply);
+$("#sort").addEventListener("change", apply);
+$("#close").onclick = shut;
+$("#scrim").onclick = shut;
+document.addEventListener("keydown", e => { if(e.key === "Escape") shut(); });
+$("#reset").onclick = () => {
+  $("#q").value = ""; $("#fCtc").value = "0";
+  $("#fCgpa").value = ""; $("#fCgpaOnly").checked = false;
+  document.querySelectorAll('.rail input[type=checkbox]').forEach(c => c.checked = false);
+  apply();
+};
+$("#railToggle").onclick = () => {
+  const b = $("#railBody"), open = b.classList.toggle("open");
+  $("#railToggle").setAttribute("aria-expanded", open);
+};
+(function theme(){
+  const saved = (()=>{ try{ return localStorage.getItem("pa-theme"); }catch{ return null; } })();
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  $("#theme").onclick = () => {
+    const now = document.documentElement.getAttribute("data-theme");
+    const dark = now ? now === "dark"
+      : matchMedia("(prefers-color-scheme: dark)").matches;
+    const next = dark ? "light" : "dark";
+    document.documentElement.setAttribute("data-theme", next);
+    try{ localStorage.setItem("pa-theme", next); }catch{}
+  };
+})();
+
+boot();
+</script>
+</body>
+</html>

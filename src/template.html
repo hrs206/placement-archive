@@ -116,6 +116,7 @@ button,input,select{font:inherit;color:inherit}
 .money{text-align:right; font-variant-numeric:tabular-nums}
 .money b{font-family:var(--serif); font-size:19px; font-weight:500; letter-spacing:-.01em; display:block}
 .money small{color:var(--muted); font-size:12px}
+.money .flag{color:var(--warn)}
 .gate{text-align:right; font-variant-numeric:tabular-nums; font-size:14px; color:var(--muted)}
 @media(max-width:700px){
   .row{grid-template-columns:minmax(0,1fr) auto; gap:10px}
@@ -125,6 +126,99 @@ button,input,select{font:inherit;color:inherit}
 .tag{display:inline-block; font-size:11.5px; padding:1px 6px; border:1px solid var(--rule);
   border-radius:20px; color:var(--muted); vertical-align:middle; margin-left:6px}
 .tag.intern{color:var(--accent); border-color:var(--accent)}
+.tag.batch{font-variant-numeric:tabular-nums}
+.views{display:flex; gap:0; border:1px solid var(--rule); border-radius:var(--radius); overflow:hidden}
+.views button{background:none;border:0;padding:6px 12px;cursor:pointer;color:var(--muted);font-size:13.5px}
+.views button.on{background:var(--accent-soft); color:var(--ink)}
+.when{color:var(--muted); font-size:13px; white-space:nowrap}
+.when.approx{opacity:.8}
+.cgroup{border-bottom:1px solid var(--rule); padding:18px 4px}
+.cgroup h3{font-family:var(--serif); font-size:19px; font-weight:500; margin:0 0 2px}
+.cgroup .sub{color:var(--muted); font-size:13px; margin:0 0 10px}
+.cgroup .trend{color:var(--accent); font-weight:500}
+.cgroup .trend.down{color:var(--warn)}
+.crow{display:grid; grid-template-columns:70px minmax(0,1fr) 92px; gap:14px;
+  align-items:baseline; width:100%; text-align:left; background:none; border:0;
+  padding:6px 0; cursor:pointer; font:inherit; color:inherit; font-size:14px}
+.crow:hover{background:var(--accent-soft)}
+.crow .b{color:var(--muted); font-size:12.5px; font-variant-numeric:tabular-nums}
+.crow .m{text-align:right; font-variant-numeric:tabular-nums}
+
+/* compare view */
+.band{padding:22px 0; border-bottom:1px solid var(--rule)}
+.band:last-child{border-bottom:0}
+.band > h3{font-size:13px;font-weight:600;color:var(--muted);margin:0 0 4px}
+.band > .lede{color:var(--muted);font-size:13.5px;margin:0 0 16px;max-width:66ch}
+.stats{display:grid;gap:0;border:1px solid var(--rule);border-radius:var(--radius);overflow:hidden}
+.stats .hrow,.stats .srow{display:grid;grid-template-columns:minmax(0,1.4fr) repeat(var(--nb),minmax(0,1fr))}
+.stats .hrow{background:var(--accent-soft);font-size:12.5px;color:var(--muted)}
+.stats .hrow div,.stats .srow div{padding:9px 12px}
+.stats .srow{border-top:1px solid var(--rule)}
+.stats .srow div:first-child{color:var(--muted);font-size:13.5px}
+.stats .srow div+div{font-variant-numeric:tabular-nums;font-family:var(--serif);font-size:17px}
+.stats .hrow div+div{font-family:var(--sans);font-weight:600;color:var(--ink);font-size:13px}
+
+/* two-sided timeline */
+.twoside{border-top:1px solid var(--rule)}
+.tr{display:grid;grid-template-columns:minmax(0,1fr) 86px minmax(0,1fr);
+  gap:8px;align-items:start;padding:10px 0;border-bottom:1px solid var(--rule)}
+.tr.head{padding:8px 0;border-bottom-color:var(--ink)}
+.tr.head b{font-size:12.5px;color:var(--muted);font-weight:600}
+.tr.empty{padding:4px 0;opacity:.5}
+.tr .side{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
+.tr .side.left{justify-content:flex-end}
+.tr .side.right{justify-content:flex-start}
+.tr .axis{position:relative;text-align:center;align-self:stretch;
+  display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:1px}
+.tr .axis::before{content:"";position:absolute;top:0;bottom:-11px;left:50%;
+  width:1px;background:var(--rule)}
+.tr:last-child .axis::before{bottom:0}
+.tr .axis b{position:relative;font-family:var(--serif);font-size:15px;font-weight:500;
+  background:var(--paper);padding:0 6px}
+.tr .axis small{position:relative;color:var(--muted);font-size:11px;
+  background:var(--paper);padding:0 5px;font-variant-numeric:tabular-nums}
+.tr .axis .dot{position:relative;width:7px;height:7px;border-radius:50%;
+  background:var(--rule);margin-top:5px}
+.tr .axis .dot.on{background:var(--accent)}
+.ent{display:inline-flex;align-items:baseline;gap:5px;max-width:100%;
+  background:var(--card);border:1px solid var(--rule);border-radius:var(--radius);
+  padding:3px 8px;cursor:pointer;font:inherit;font-size:13px;text-align:left}
+.ent:hover{border-color:var(--accent);background:var(--accent-soft)}
+.ent .co{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:20ch}
+.ent .pk{color:var(--muted);font-size:12px;font-variant-numeric:tabular-nums}
+.ent .tag{margin-left:0;padding:0 4px;font-size:10.5px}
+.undated{margin-top:22px;padding-top:4px;border-top:1px solid var(--rule)}
+.undated h4{font-size:13px;font-weight:600;color:var(--muted);margin:14px 0 4px}
+.undated .tr{border-bottom:0}
+.undated .axis::before{display:none}
+@media(max-width:760px){
+  .tr{grid-template-columns:1fr;gap:4px}
+  .tr .side.left,.tr .side.right{justify-content:flex-start}
+  .tr .axis{align-self:auto;flex-direction:row;gap:7px;justify-content:flex-start;
+    text-align:left;padding:6px 0 2px}
+  .tr .axis::before{display:none}
+  .tr.head{display:none}
+  .tr .side.left::before{content:"◀ earlier batch";font-size:11px;color:var(--muted);width:100%}
+  .tr .side.right::before{content:"▶ later batch";font-size:11px;color:var(--muted);width:100%}
+}
+.tl{display:grid;grid-template-columns:46px minmax(0,1fr);gap:4px 10px;align-items:center}
+.tl .mo{color:var(--muted);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
+.tl .bars{display:flex;flex-direction:column;gap:2px;padding:3px 0}
+.tl .bar{height:9px;display:flex;align-items:stretch;min-width:1px}
+.tl .solid{background:var(--accent)}
+.tl .est{background:repeating-linear-gradient(45deg,var(--accent) 0 2px,transparent 2px 5px);opacity:.75}
+.tl .lbl{font-size:11.5px;color:var(--muted);padding-left:6px;white-space:nowrap;align-self:center}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:12.5px;color:var(--muted);margin:12px 0 0}
+.legend i{display:inline-block;width:18px;height:9px;vertical-align:-1px;margin-right:5px}
+
+.mv{display:grid;grid-template-columns:minmax(0,1fr) 92px 92px 74px;gap:10px;
+  padding:7px 4px;border-bottom:1px solid var(--rule);font-size:14px;align-items:baseline}
+.mv.head{color:var(--muted);font-size:12.5px;border-bottom-color:var(--ink)}
+.mv .n{text-align:right;font-variant-numeric:tabular-nums}
+.mv .up{color:var(--accent);font-weight:500}
+.mv .dn{color:var(--warn);font-weight:500}
+.chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+.chip{font-size:12.5px;border:1px solid var(--rule);border-radius:20px;padding:2px 9px;color:var(--muted)}
 
 /* ---------- empty / loader ---------- */
 .notice{padding:56px 4px; max-width:60ch}
@@ -196,6 +290,10 @@ button,input,select{font:inherit;color:inherit}
   <aside class="rail">
     <button class="rail-toggle" id="railToggle" aria-expanded="false">Filters <span>▾</span></button>
     <div class="rail-body" id="railBody">
+      <div class="fgroup" id="batchGroup" hidden>
+        <h3>Batch</h3>
+        <div id="fBatch"></div>
+      </div>
       <div class="fgroup">
         <h3>Type</h3>
         <div id="fType"></div>
@@ -230,6 +328,11 @@ button,input,select{font:inherit;color:inherit}
 
   <main>
     <div class="listbar" id="listbar" hidden>
+      <div class="views" id="views" hidden>
+        <button data-view="list" class="on">All postings</button>
+        <button data-view="company">By company</button>
+        <button data-view="compare">Compare</button>
+      </div>
       <label for="sort">Sort</label>
       <select id="sort">
         <option value="ctc-desc">Package, high to low</option>
@@ -237,6 +340,8 @@ button,input,select{font:inherit;color:inherit}
         <option value="company">Company, A–Z</option>
         <option value="role">Role, A–Z</option>
         <option value="cgpa-asc">CGPA needed, lowest first</option>
+        <option value="date-desc">Date posted, newest first</option>
+        <option value="date-asc">Date posted, oldest first</option>
         <option value="index">Original listing order</option>
       </select>
     </div>
@@ -273,7 +378,11 @@ const esc = s => String(s ?? "").replace(/[&<>"']/g, c =>
 function annual(j){
   const v = j.ctc_max ?? j.ctc_min;
   if (v == null) return null;
-  return j.ctc_period === "month" ? v * 12 : v;
+  if (j.ctc_period === "month"){
+    if (v > MONTHLY_SANITY) return null;   // mislabelled: don't invent a number
+    return v * 12;
+  }
+  return v;
 }
 function lpa(n){
   if (n == null) return null;
@@ -283,10 +392,23 @@ function lpa(n){
 }
 const isIntern = j => /intern/i.test(j.job_type || "");
 
+// The portal occasionally mislabels an annual figure as monthly (Cisco's
+// "\u20b9 2473633 per Month"). Multiplying that by 12 produced a confident
+// \u20b9296.8L that was simply wrong, so implausible monthly figures are shown
+// as-stated with a warning instead of being annualised.
+const MONTHLY_SANITY = 1000000;   // \u20b910L/month
+const suspect = j => j.ctc_period === "month" &&
+                     (j.ctc_max ?? j.ctc_min ?? 0) > MONTHLY_SANITY;
+function inr(n){
+  if (n == null) return null;
+  return "\u20b9" + n.toLocaleString("en-IN");
+}
+
 /* ---------- loading ---------- */
 function boot(){
   if (Array.isArray(EMBEDDED) && EMBEDDED.length){
     JOBS = EMBEDDED;
+    MULTI = new Set(JOBS.map(j => j.batch).filter(Boolean)).size > 1;
     buildFacets();
     $("#listbar").hidden = false;
     if (BUILT_ON && !BUILT_ON.startsWith("/*")) $("#built").textContent = "Updated " + BUILT_ON;
@@ -313,6 +435,14 @@ function buildFacets(){
     JOBS.forEach(j => { const v = j[k]; if(v) m.set(v,(m.get(v)||0)+1); });
     return [...m.entries()].sort((a,b) => b[1]-a[1]);
   };
+  const batches = tally("batch");
+  if (batches.length > 1){
+    // newest batch first, so the current year leads
+    batches.sort((a,b) => String(b[0]).localeCompare(String(a[0])));
+    facet($("#fBatch"), "batch", batches);
+    $("#batchGroup").hidden = false;
+    $("#views").hidden = false;
+  }
   facet($("#fType"), "job_type", tally("job_type"));
   facet($("#fCat"), "category", tally("category"));
   document.querySelectorAll('.rail input[type=checkbox][data-k]').forEach(c => c.onchange = apply);
@@ -325,18 +455,21 @@ function checked(k){
 function apply(){
   const q = $("#q").value.trim().toLowerCase();
   const types = checked("job_type"), cats = checked("category");
+  const batches = checked("batch");
   const minCtc = +$("#fCtc").value || 0;
   const cgpa = parseFloat($("#fCgpa").value);
   const gateOn = $("#fCgpaOnly").checked && !isNaN(cgpa);
 
   VIEW = JOBS.filter(j => {
+    if(batches.length && !batches.includes(j.batch)) return false;
     if(types.length && !types.includes(j.job_type)) return false;
     if(cats.length && !cats.includes(j.category)) return false;
     if(minCtc){ const a = annual(j); if(a == null || a < minCtc) return false; }
     if(gateOn && j.required_cgpa != null && j.required_cgpa > cgpa) return false;
     if(q){
       const hay = [j.title,j.company,j.location,j.job_functions,j.required_skills,
-                   j.job_description,j.about_company,j.category]
+                   j.job_description,j.about_company,j.category,
+                   j.batch,j.posted_label]
                   .filter(Boolean).join(" ").toLowerCase();
       if(!hay.includes(q)) return false;
     }
@@ -357,13 +490,23 @@ function apply(){
     "cgpa-asc": () => VIEW.sort(byNum(j=>j.required_cgpa, 1)),
     "company":  () => VIEW.sort((a,b)=>(a.company||"").localeCompare(b.company||"")),
     "role":     () => VIEW.sort((a,b)=>(a.title||"").localeCompare(b.title||"")),
+    "date-desc":() => VIEW.sort((a,b)=>String(b.posted_month||"").localeCompare(String(a.posted_month||""))),
+    "date-asc": () => VIEW.sort((a,b)=>{
+        const x=a.posted_month||"", y=b.posted_month||"";
+        if(!x && !y) return 0; if(!x) return 1; if(!y) return -1;
+        return x.localeCompare(y);
+      }),
     "index":    () => VIEW.sort((a,b)=>(a.index||0)-(b.index||0)),
   })[s]();
 
   render();
 }
+let MULTI = false, MODE = "list";
+
 function render(){
   $("#tally").textContent = `${VIEW.length} of ${JOBS.length}`;
+  if(MODE === "company") return renderCompanies();
+  if(MODE === "compare") return renderCompare();
   if(!VIEW.length){
     $("#out").innerHTML = `<div class="notice"><h2>Nothing matches</h2>
       <p>Widen the package range or clear a filter to see more roles.</p></div>`;
@@ -378,15 +521,257 @@ function render(){
           isIntern(j) ? '<span class="tag intern">Internship</span>' : ""}</p>
         <p class="org">${esc(j.company || "Company not stated")}</p>
         <p class="meta">${esc(j.location || "Location not stated")}${
-          j.category ? " &middot; " + esc(j.category) : ""}</p>
+          j.category ? " &middot; " + esc(j.category) : ""}${
+          j.posted_label ? ` &middot; <span class="when${
+            j.posted_precision === "coarse" ? " approx" : ""}">${esc(j.posted_label)}</span>` : ""}${
+          MULTI ? `<span class="tag batch">${esc(j.batch)}</span>` : ""}</p>
       </div>
-      <div class="money">${ l ? `<b>₹${l}L</b><small>${
-          j.ctc_period === "month" ? "per year, from monthly" : "per year"}</small>`
-        : `<small>Not stated</small>` }</div>
+      <div class="money">${
+        suspect(j)
+          ? `<small class="flag">${esc(j.ctc_raw || "")}<br>looks mislabelled</small>`
+          : l
+            ? `<b>₹${l}L</b><small>${ j.ctc_period === "month"
+                 ? `per year &middot; ${inr(j.ctc_max ?? j.ctc_min)}/month`
+                 : "per year" }</small>`
+            : `<small>Not stated</small>` }</div>
       <div class="gate">${ cg != null ? esc(cg) + " CGPA" : "—" }</div>
     </button>`;
   }).join("") + `</div>`;
   document.querySelectorAll(".row").forEach(r => r.onclick = () => open(VIEW[+r.dataset.i]));
+}
+
+/* ---------- company view ---------- */
+// Groups the filtered postings by company so a company's history across
+// batches sits together. Only companies that appear in more than one batch
+// show a trend, since a single-batch company has nothing to compare against.
+function renderCompanies(){
+  const groups = new Map();
+  VIEW.forEach(j => {
+    const k = (j.company || "Company not stated").trim();
+    if(!groups.has(k)) groups.set(k, []);
+    groups.get(k).push(j);
+  });
+
+  const rows = [...groups.entries()].map(([name, jobs]) => {
+    jobs.sort((a,b) => String(a.batch||"").localeCompare(String(b.batch||"")));
+    const batches = new Set(jobs.map(j => j.batch));
+    // compare the best package in the earliest batch against the latest
+    const best = b => {
+      const vals = jobs.filter(j => j.batch === b).map(annual).filter(v => v != null);
+      return vals.length ? Math.max(...vals) : null;
+    };
+    const ordered = [...batches].sort();
+    const first = best(ordered[0]), last = best(ordered[ordered.length-1]);
+    const change = (batches.size > 1 && first != null && last != null && first > 0)
+      ? (last - first) / first : null;
+    return {name, jobs, batches:[...batches], change, top:Math.max(
+      ...jobs.map(j => annual(j) ?? 0))};
+  });
+
+  rows.sort((a,b) => b.top - a.top);
+
+  $("#out").innerHTML = rows.map((g,gi) => `
+    <div class="cgroup">
+      <h3>${esc(g.name)}</h3>
+      <p class="sub">${g.jobs.length} posting${g.jobs.length>1?"s":""}${
+        g.batches.length>1 ? " across " + g.batches.length + " batches" : ""}${
+        g.change != null ? ` &middot; <span class="trend${g.change<0?" down":""}">${
+          g.change>=0?"+":""}${Math.round(g.change*100)}% package</span>` : ""}</p>
+      ${g.jobs.map(j => {
+        const a = annual(j), l = lpa(a);
+        return `<button class="crow" data-uid="${esc(j.uid)}">
+          <span class="b">${esc(j.batch || "")}</span>
+          <span>${esc(j.title || "Untitled role")}${
+            isIntern(j) ? '<span class="tag intern">Internship</span>' : ""}</span>
+          <span class="m">${ suspect(j) ? "&mdash;" : l ? "₹"+l+"L" : "&mdash;" }</span>
+        </button>`;
+      }).join("")}
+    </div>`).join("");
+
+  document.querySelectorAll(".crow").forEach(r => r.onclick = () => {
+    const j = VIEW.find(x => x.uid === r.dataset.uid);
+    if(j) open(j);
+  });
+}
+
+/* ---------- compare view ---------- */
+const SEASON = [6,7,8,9,10,11,0,1,2,3,4,5];   // Jul..Jun, how a placement year runs
+const MON = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+function monthsIn(j){
+  // Every month this posting could plausibly belong to. For a reliably dated
+  // posting that's one month; for "a year ago" it's a seven-month window.
+  // Smearing it across the window avoids the false spike you get by piling
+  // every uncertain posting onto its midpoint.
+  if(!j.posted_month) return [];
+  if(j.posted_precision !== "coarse" || !j.posted_earliest || !j.posted_latest)
+    return [j.posted_month];
+  const [ey,em] = j.posted_earliest.split("-").map(Number);
+  const [ly,lm] = j.posted_latest.split("-").map(Number);
+  const out = [];
+  let y = ey, m = em;
+  for(let guard = 0; guard < 48; guard++){
+    out.push(`${y}-${String(m).padStart(2,"0")}`);
+    if(y === ly && m === lm) break;
+    m++; if(m > 12){ m = 1; y++; }
+  }
+  return out;
+}
+
+function stats(jobs){
+  const pkgs = jobs.map(annual).filter(v => v != null).sort((a,b)=>a-b);
+  const med = pkgs.length ? pkgs[Math.floor(pkgs.length/2)] : null;
+  return {
+    n: jobs.length,
+    companies: new Set(jobs.map(j => (j.company||"").trim()).filter(Boolean)).size,
+    median: med,
+    top: pkgs.length ? pkgs[pkgs.length-1] : null,
+    interns: jobs.filter(isIntern).length,
+    dated: jobs.filter(j => j.posted_precision === "exact").length,
+  };
+}
+
+function renderCompare(){
+  const batches = [...new Set(VIEW.map(j => j.batch).filter(Boolean))].sort();
+  if(batches.length < 2){
+    $("#out").innerHTML = `<div class="notice"><h2>Only one batch in view</h2>
+      <p>Clear the batch filter to compare the two years.</p></div>`;
+    return;
+  }
+  const sets = batches.map(b => VIEW.filter(j => j.batch === b));
+  const st = sets.map(stats);
+  const fmt = v => v == null ? "&mdash;" : "₹" + lpa(v) + "L";
+
+  const rows = [
+    ["Postings", st.map(s => s.n)],
+    ["Distinct companies", st.map(s => s.companies)],
+    ["Median package", st.map(s => fmt(s.median))],
+    ["Highest package", st.map(s => fmt(s.top))],
+    ["Internships", st.map(s => s.interns)],
+    ["Reliably dated", st.map((s,i) => `${s.dated} of ${s.n}`)],
+  ];
+
+  // --- two-sided timeline -------------------------------------------
+  // Months run down the centre with one batch either side. Only postings
+  // whose month we actually know are placed here: a posting the portal
+  // dated just "a year ago" could sit in any of seven months, and printing
+  // its company in all seven would be invention. Those are listed under the
+  // timeline instead, so none are hidden.
+  const lane = batches.map(() => SEASON.map(() => []));
+  const undated = batches.map(() => []);
+  sets.forEach((jobs, bi) => jobs.forEach(j => {
+    if(j.posted_precision === "exact" && j.posted_month){
+      const mi = Number(j.posted_month.split("-")[1]) - 1;
+      const slot = SEASON.indexOf(mi);
+      if(slot >= 0){ lane[bi][slot].push(j); return; }
+    }
+    undated[bi].push(j);
+  }));
+  lane.forEach(l => l.forEach(cell =>
+    cell.sort((x,y) => (annual(y) ?? -1) - (annual(x) ?? -1))));
+
+  const pill = j => {
+    const a = annual(j), l = lpa(a);
+    return `<button class="ent" data-uid="${esc(j.uid)}" title="${esc(j.title||"")}">
+      <span class="co">${esc(j.company || "Company not stated")}</span>${
+      l ? `<span class="pk">₹${l}L</span>` : ""}${
+      isIntern(j) ? '<span class="tag intern">Int</span>' : ""}</button>`;
+  };
+
+  const timeline = SEASON.map((mi, slot) => {
+    const L = lane[0][slot], R = lane[1][slot];
+    if(!L.length && !R.length) return `
+      <div class="tr empty"><div></div><div class="axis"><span class="dot"></span>
+        <b>${MON[mi]}</b></div><div></div></div>`;
+    return `<div class="tr">
+      <div class="side left">${L.map(pill).join("")}</div>
+      <div class="axis"><span class="dot on"></span><b>${MON[mi]}</b>
+        <small>${L.length} &middot; ${R.length}</small></div>
+      <div class="side right">${R.map(pill).join("")}</div>
+    </div>`;
+  }).join("");
+
+  // --- company movement ---
+  const seen = new Map();
+  VIEW.forEach(j => {
+    const k = (j.company||"").trim(); if(!k) return;
+    if(!seen.has(k)) seen.set(k, {});
+    const best = annual(j);
+    if(best != null) seen.get(k)[j.batch] = Math.max(seen.get(k)[j.batch] ?? 0, best);
+    else if(!(j.batch in seen.get(k))) seen.get(k)[j.batch] = null;
+  });
+  const [older, newer] = batches;
+  const both = [], arrived = [], gone = [];
+  seen.forEach((v, name) => {
+    const a = v[older], b = v[newer];
+    const inA = older in v, inB = newer in v;
+    if(inA && inB) both.push({name, a, b,
+      ch: (a && b) ? (b - a)/a : null});
+    else if(inB) arrived.push(name);
+    else gone.push(name);
+  });
+  both.sort((x,y) => (y.ch ?? -9) - (x.ch ?? -9));
+
+  $("#out").innerHTML = `
+    <section class="band">
+      <h3>At a glance</h3>
+      <div class="stats" style="--nb:${batches.length}">
+        <div class="hrow"><div>&nbsp;</div>${batches.map(b=>`<div>${esc(b)}</div>`).join("")}</div>
+        ${rows.map(([k,vals]) => `<div class="srow"><div>${esc(k)}</div>${
+          vals.map(v=>`<div>${v}</div>`).join("")}</div>`).join("")}
+      </div>
+    </section>
+
+    <section class="band">
+      <h3>When they came</h3>
+      <p class="lede">Aligned by position in the placement year, so the two
+        seasons sit side by side rather than end to end. ${esc(batches[0])} on the
+        left, ${esc(batches[1])} on the right.</p>
+      <div class="twoside">
+        <div class="tr head"><div class="side left"><b>${esc(batches[0])}</b></div>
+          <div class="axis"></div>
+          <div class="side right"><b>${esc(batches[1])}</b></div></div>
+        ${timeline}
+      </div>
+      ${(undated[0].length || undated[1].length) ? `
+      <div class="undated">
+        <h4>Month not known</h4>
+        <p class="lede">The portal dated these only as "a year ago" or older,
+          which spans several months — too vague to place on the timeline.</p>
+        <div class="tr">
+          <div class="side left">${undated[0].map(pill).join("") || "&mdash;"}</div>
+          <div class="axis"><small>${undated[0].length} &middot; ${undated[1].length}</small></div>
+          <div class="side right">${undated[1].map(pill).join("") || "&mdash;"}</div>
+        </div>
+      </div>` : ""}
+    </section>
+
+    <section class="band">
+      <h3>Companies in both years</h3>
+      <p class="lede">Best package each year, and how it moved.</p>
+      <div class="mv head"><div>Company</div><div class="n">${esc(older)}</div>
+        <div class="n">${esc(newer)}</div><div class="n">Change</div></div>
+      ${both.map(c => `<div class="mv"><div>${esc(c.name)}</div>
+        <div class="n">${fmt(c.a)}</div><div class="n">${fmt(c.b)}</div>
+        <div class="n">${c.ch == null ? "&mdash;"
+          : `<span class="${c.ch>=0?"up":"dn"}">${c.ch>=0?"+":""}${Math.round(c.ch*100)}%</span>`}</div>
+      </div>`).join("") || `<p class="lede">No company appears in both years.</p>`}
+    </section>
+
+    <section class="band">
+      <h3>Only in ${esc(newer)}</h3>
+      <div class="chips">${arrived.map(n=>`<span class="chip">${esc(n)}</span>`).join("") || "&mdash;"}</div>
+    </section>
+
+    <section class="band">
+      <h3>Only in ${esc(older)}</h3>
+      <div class="chips">${gone.map(n=>`<span class="chip">${esc(n)}</span>`).join("") || "&mdash;"}</div>
+    </section>`;
+
+  document.querySelectorAll(".ent").forEach(e => e.onclick = () => {
+    const j = VIEW.find(x => x.uid === e.dataset.uid);
+    if(j) open(j);
+  });
 }
 
 /* ---------- drawer ---------- */
@@ -400,6 +785,11 @@ function open(j){
   const a = annual(j), l = lpa(a);
   const facts = [
     ["Package", j.ctc_raw || (l ? `₹${l}L per year` : "Not stated")],
+    ["Note on package", suspect(j)
+        ? "The portal states this as a monthly figure, which would be "
+          + "implausibly high. It is most likely an annual package entered "
+          + "under the wrong period. Treat the number above as unverified."
+        : null],
     ["Type", j.job_type],
     ["Category", j.category],
     ["Function", j.job_functions],
@@ -408,7 +798,14 @@ function open(j){
             ? ` (stated as ${j.required_percent_original}%)` : "")
         : null],
     ["Backlogs", j.backlogs],
-    ["Posted", j.posted],
+    ["Posted", j.posted_label
+        ? (j.posted_precision === "coarse"
+            ? `${j.posted_label.replace("~","")} (approximate — the portal only `
+              + `said "${j.posted}", so this could be anywhere from `
+              + `${j.posted_earliest} to ${j.posted_latest})`
+            : j.posted_label)
+        : j.posted],
+    ["Batch", j.batch],
   ].filter(([,v]) => v != null && v !== "");
 
   const wf = (j.hiring_workflow || []).map(s =>
@@ -455,6 +852,12 @@ $("#reset").onclick = () => {
   document.querySelectorAll('.rail input[type=checkbox]').forEach(c => c.checked = false);
   apply();
 };
+document.querySelectorAll("#views button").forEach(b => b.onclick = () => {
+  document.querySelectorAll("#views button").forEach(x => x.classList.remove("on"));
+  b.classList.add("on");
+  MODE = b.dataset.view;
+  render();
+});
 $("#railToggle").onclick = () => {
   const b = $("#railBody"), open = b.classList.toggle("open");
   $("#railToggle").setAttribute("aria-expanded", open);
